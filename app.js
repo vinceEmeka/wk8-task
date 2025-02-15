@@ -1,39 +1,14 @@
-// class Telephone {
-//  observers = []
-//  addPhoneNumber(observer) {
-//   this.observers.add(observer)
-//  }
-
-//  removePhoneNumber(observer) {
-//   this.observers.remove(observer)
-
-//  }
-
-//  dialPhoneNumber(observer) {
-//   console.log(`${observer} Now Dailing 2347023232`);
-
-//  }
-
-//  notify(context) {
-//   this.observers.forEach(observer) => observer.update(context);
-//   // for (let observer of this.observers) {
-//   //  observer.update(context)
-//   // }
-//  }
-// }
-
-// class observer {
-//  constructor() {
-//   update()
-//  }
-// }
-
-// Telephone.addPhoneNumber(123456778);
-
+// the subject class with methods to add, remove and dial a number...
 class Telephonebook {
  constructor() {
   this.phoneNumbers = [];
   this.observers = [];
+ }
+
+ notify(event, number) {
+  this.observers.forEach((observer) => {
+   observer.update(event, number)
+  })
  }
 
  addPhoneNumber(number) {
@@ -60,11 +35,6 @@ class Telephonebook {
   }
  }
 
- notify(event, number) {
-  this.observers.forEach((observer) => {
-   observer.update(event, number)
-  })
- }
 
  addObserver(observer) {
   this.observers.push(observer);
@@ -74,15 +44,18 @@ class Telephonebook {
 
 class Observer {
  update(event, number) {
-  console.log(`${number} was ${event}`);
+  console.log(`${number}`);
  }
 }
 
 class Dailling {
  update(event, number) {
-  console.log(`Now Dialling ${number}`);
+  if (event === "dialed") {
+   console.log(`Now Dialling ${number}`);
+  } else {
+   console.log(`${number}`);
+  }
  }
-
 }
 
 const telephonebook = new Telephonebook();
@@ -93,9 +66,10 @@ const androidObserver = new Dailling();
 telephonebook.addObserver(iphoneObserver);
 telephonebook.addObserver(androidObserver);
 
-telephonebook.addPhoneNumber(2340001234);
-telephonebook.addPhoneNumber(2340002222);
-telephonebook.removePhoneNumber(2340002222);
-telephonebook.dialPhoneNumber(2324232323);
+
+telephonebook.addPhoneNumber(2347023232);
+telephonebook.dialPhoneNumber(2347023232);
+// telephonebook.removePhoneNumber(2347023232);
+
 
 
